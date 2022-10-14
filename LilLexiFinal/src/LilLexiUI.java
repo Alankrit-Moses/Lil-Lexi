@@ -125,11 +125,13 @@ public class LilLexiUI
 		statusLabel.setText("Ready to edit!");
 		
 		//---- main menu
-		Menu menuBar, fileMenu, insertMenu, helpMenu;
+		Menu menuBar, fileMenu, insertMenu, insertMenu2, helpMenu;
 		MenuItem insertImageItem;
-		MenuItem fileMenuHeader, insertMenuHeader, helpMenuHeader, fileExitItem, fileSaveItem, helpGetHelpItem;
+		MenuItem fileMenuHeader, insertMenuHeader, insertMenuHeader2, helpMenuHeader, fileExitItem, fileSaveItem, helpGetHelpItem;
 		MenuItem insertRectItem;
 		MenuItem duck,apple,question;
+		MenuItem insertShapeItem;
+		MenuItem rectangle,circle;
 
 		menuBar = new Menu(shell, SWT.BAR);
 		
@@ -148,6 +150,9 @@ public class LilLexiUI
 		insertMenuHeader.setText("Insert");
 		insertMenu = new Menu(shell, SWT.DROP_DOWN);
 		insertMenuHeader.setMenu(insertMenu);
+//		insertMenuHeader2 = new MenuItem(menuBar, SWT.PUSH);
+//		insertMenu2 = new Menu(shell, SWT.DROP_DOWN);
+//		insertMenuHeader2.setMenu(insertMenu2);
 
 	    insertImageItem = new MenuItem(insertMenu, SWT.CASCADE);
 	    insertImageItem.setText("Image");
@@ -159,9 +164,25 @@ public class LilLexiUI
 	    apple.setText("Apple");
 	    question = new MenuItem(img, SWT.PUSH);
 	    question.setText("Question");
+//	    
+//	    insertShapeItem = new MenuItem(insertMenu, SWT.CASCADE);
+//	    insertImageItem.setText("Shapes");
+//	    Menu shape = new Menu(shell,SWT.DROP_DOWN);
+//	    insertShapeItem.setMenu(shape);
+//	    rectangle = new MenuItem(shape, SWT.NONE);
+//	    rectangle.setText("Rectangle");
+//	    circle = new MenuItem(shape, SWT.NONE);
+//	    circle.setText("Circle");
 	    
-	    insertRectItem = new MenuItem(insertMenu, SWT.PUSH);
-	    insertRectItem.setText("Rectangle");
+	    
+	    insertRectItem = new MenuItem(insertMenu, SWT.CASCADE);
+	    insertRectItem.setText("Shapes");
+	    Menu shape = new Menu(shell,SWT.DROP_DOWN);
+	    insertRectItem.setMenu(shape);
+	    rectangle = new MenuItem(shape, SWT.NONE);
+	    rectangle.setText("Rectangle");
+	    circle = new MenuItem(shape, SWT.NONE);
+	    circle.setText("Circle");
 
 	    helpMenuHeader = new MenuItem(menuBar, SWT.CASCADE);
 	    helpMenuHeader.setText("Help");
@@ -242,7 +263,7 @@ public class LilLexiUI
 //            	System.out.println("About");
 //            }
 //        });
-//	    
+	    
 	    shell.setMenuBar(menuBar);
 	      
 		//---- event loop
