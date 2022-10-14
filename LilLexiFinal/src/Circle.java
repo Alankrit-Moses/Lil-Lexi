@@ -7,8 +7,8 @@ public class Circle extends Shape{
 		super(0,"Shape",0,0);
 	}
 	
-	public void draw(Shell shell, PaintEvent e) {
-		e.gc.drawOval(this.x, this.y, 100, 100);
+	public void draw(Shell shell, PaintEvent e, int scrollPos) {
+		e.gc.drawOval(this.x, this.y-scrollPos, 100, 100);
 	}
 
 }

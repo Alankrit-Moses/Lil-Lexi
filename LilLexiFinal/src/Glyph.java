@@ -41,7 +41,7 @@ public abstract class Glyph {
 		this.size = size;
 	}
 	
-	public void draw(Shell shell, PaintEvent e) {
+	public void draw(Shell shell, PaintEvent e, int scrollPos) {
 	}
 	public void remove() {}
 }

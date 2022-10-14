@@ -10,8 +10,8 @@ public class Picture extends Glyph{
 		this.i = i;
 	}
 	
-	public void draw(Shell shell, PaintEvent e)
+	public void draw(Shell shell, PaintEvent e, int scrollPos)
 	{
-		e.gc.drawImage(i, this.x, this.y);
+		e.gc.drawImage(i, this.x, this.y-scrollPos);
 	}
 }

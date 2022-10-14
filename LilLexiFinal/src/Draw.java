@@ -15,13 +15,15 @@ class Draw
 	private LilLexiDoc currentDoc;
 	private Display display;
 	private int fontSize;
-	public Draw(Shell shell, PaintEvent e, LilLexiDoc currentDoc, Display display, int fontSize,Device device)
+	private int scrollPos;
+	public Draw(Shell shell, PaintEvent e, LilLexiDoc currentDoc, Display display, int fontSize,Device device, int dragOffset)
 	{
 		this.shell = shell;
 		this.e = e;
 		this.currentDoc = currentDoc;
 		this.display = display;
 		this.fontSize = fontSize;
+		scrollPos = dragOffset*6;
 		this.setBreakPoints();
 		this.execute();
 	}
@@ -36,7 +38,7 @@ class Draw
 		List<Glyph> glyphs = currentDoc.getGlyphs();
 		for (Glyph g: glyphs)
 		{
-			g.draw(shell,e);
+			g.draw(shell,e,scrollPos);
 		}
 		//e.gc.drawString("|", column+32, row+10);
 	}
@@ -71,8 +73,8 @@ class Draw
 			}
 			else if(g.getType().equalsIgnoreCase("Image") || g.getType().equalsIgnoreCase("Shape"))
 			{
-				g.setCoord(200, y+50);
-				y+=200;
+				g.setCoord(200, y+25+fontSize);
+				y+=150+fontSize;
 				allowed = (int)(750/fontSize);
 				x=0;
 			}
@@ -91,5 +93,10 @@ class Draw
 					g.setCoord(0, 0);
 			}
 		}
+	}
+	
+	public void ScrollDown(int scrollPos)
+	{
+		this.scrollPos = scrollPos;
 	}
 }

@@ -23,6 +23,7 @@ public class LilLexiUI
 	private Shell shell;
 	private Label statusLabel;
 	private Canvas canvas;
+	private int dragOffset;
 	static int size = 30;
 	Image[] image;
 	
@@ -42,6 +43,7 @@ public class LilLexiUI
 		image[0] = new Image(display,"images/duck.jpg");
 		image[1] = new Image(display,"images/apple.jpg");
 		image[2] = new Image(display,"images/blank.jpg");
+		dragOffset = 0;
 	}
 		
 	/**
@@ -57,7 +59,7 @@ public class LilLexiUI
 		canvas = new Canvas(upperComp, SWT.NONE);
 		canvas.setSize(800,800);
 
-		canvas.addPaintListener(e -> new Draw(shell, e, currentDoc, display, currentDoc.getFontSize(), display));
+		canvas.addPaintListener(e -> new Draw(shell, e, currentDoc, display, currentDoc.getFontSize(), display, dragOffset));
 		
         canvas.addMouseListener(new MouseListener() {
             public void mouseDown(MouseEvent e) {
@@ -112,9 +114,11 @@ public class LilLexiUI
 //				case SWT.PAGE_DOWN: string = "SWT.PAGE_DOWN"; break;
 //				case SWT.PAGE_UP: string = "SWT.PAGE_UP"; break;
 			}
-			System.out.println ("Scroll detail -> " + string);
-			if(string == "SWT.DRAG") {
-				
+			if(string.equals("SWT.DRAG"))
+			{
+				int offset = new Integer(slider.getSelection());
+				dragOffset = offset;
+				updateUI();
 			}
 		});
 		        

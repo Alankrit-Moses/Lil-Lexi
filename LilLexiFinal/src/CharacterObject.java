@@ -65,8 +65,8 @@ public class CharacterObject extends Glyph{
 		this.underline = underline;
 	}
 	@Override
-	public void draw(Shell shell, PaintEvent e) {
+	public void draw(Shell shell, PaintEvent e, int scrollPos) {
 		System.out.println("");
-		e.gc.drawString(""+ch, x+10, y);
+		e.gc.drawString(""+ch, x+10, y-scrollPos);
 	}
 }
