@@ -33,7 +33,7 @@ public class LilLexiUI
 	{
 		//---- create the window and the shell
 		Display.setAppName("Lil Lexi");
-		display = new Display();  
+		display = new Display();
 		shell = new Shell(display);
 	    shell.setText("Lil Lexi");
 		shell.setSize(900,900);
