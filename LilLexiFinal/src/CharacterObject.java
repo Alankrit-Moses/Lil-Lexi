@@ -66,7 +66,7 @@ public class CharacterObject extends Glyph{
 	}
 	@Override
 	public void draw(Shell shell, PaintEvent e) {
-		System.out.println("asd");
+		System.out.println("");
 		e.gc.drawString(""+ch, x, y);
 	}
 }

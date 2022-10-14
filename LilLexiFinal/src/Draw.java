@@ -1,7 +1,9 @@
 import java.util.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -13,7 +15,7 @@ class Draw
 	private LilLexiDoc currentDoc;
 	private Display display;
 	private int fontSize;
-	public Draw(Shell shell, PaintEvent e, LilLexiDoc currentDoc, Display display, int fontSize)
+	public Draw(Shell shell, PaintEvent e, LilLexiDoc currentDoc, Display display, int fontSize,Device device)
 	{
 		this.shell = shell;
 		this.e = e;
@@ -56,7 +58,7 @@ class Draw
 				else
 				{
 					g.setCoord(x, y);
-					x+=fontSize+5;
+					x+=fontSize;
 					allowed-=1;
 					if(allowed<=0)
 					{
@@ -66,12 +68,12 @@ class Draw
 					}
 				}
 			}
-			else if(g.getType().equalsIgnoreCase("image"))
+			else if(g.getType().equalsIgnoreCase("Image"))
 			{
-				g.setCoord(x+100, y+(fontSize+50));
+				g.setCoord(200, y+50);
+				y+=200;
 				allowed = (int)(750/fontSize);
 				x=0;
-				y+=(fontSize+100);
 			}
 			else if(g.getType().equalsIgnoreCase("cursor") && lst.size()>1)
 			{

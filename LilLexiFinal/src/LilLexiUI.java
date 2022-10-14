@@ -8,8 +8,6 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Font;
 
 
@@ -26,7 +24,7 @@ public class LilLexiUI
 	private Label statusLabel;
 	private Canvas canvas;
 	static int size = 30;
-	
+	Image[] image;
 	
 	/**
 	 * Ctor
@@ -40,6 +38,10 @@ public class LilLexiUI
 	    shell.setText("Lil Lexi");
 		shell.setSize(900,900);
 		shell.setLayout( new GridLayout());
+		image = new Image[3];
+		image[0] = new Image(display,"images/duck.jpg");
+		image[1] = new Image(display,"images/apple.jpg");
+		image[2] = new Image(display,"images/blank.jpg");
 	}
 		
 	/**
@@ -55,7 +57,7 @@ public class LilLexiUI
 		canvas = new Canvas(upperComp, SWT.NONE);
 		canvas.setSize(800,800);
 
-		canvas.addPaintListener(e -> new Draw(shell, e, currentDoc, display, currentDoc.getFontSize()));
+		canvas.addPaintListener(e -> new Draw(shell, e, currentDoc, display, currentDoc.getFontSize(), display));
 		
         canvas.addMouseListener(new MouseListener() {
             public void mouseDown(MouseEvent e) {
@@ -124,8 +126,10 @@ public class LilLexiUI
 		
 		//---- main menu
 		Menu menuBar, fileMenu, insertMenu, helpMenu;
+		MenuItem insertImageItem;
 		MenuItem fileMenuHeader, insertMenuHeader, helpMenuHeader, fileExitItem, fileSaveItem, helpGetHelpItem;
-		MenuItem insertImageItem, insertRectItem;
+		MenuItem insertRectItem;
+		MenuItem duck,apple,question;
 
 		menuBar = new Menu(shell, SWT.BAR);
 		
@@ -145,8 +149,17 @@ public class LilLexiUI
 		insertMenu = new Menu(shell, SWT.DROP_DOWN);
 		insertMenuHeader.setMenu(insertMenu);
 
-	    insertImageItem = new MenuItem(insertMenu, SWT.PUSH);
+	    insertImageItem = new MenuItem(insertMenu, SWT.CASCADE);
 	    insertImageItem.setText("Image");
+	    Menu img = new Menu(shell,SWT.DROP_DOWN);
+	    insertImageItem.setMenu(img);
+	    duck = new MenuItem(img, SWT.NONE);
+	    duck.setText("Duck");
+	    apple = new MenuItem(img, SWT.NONE);
+	    apple.setText("Apple");
+	    question = new MenuItem(img, SWT.PUSH);
+	    question.setText("Question");
+	    
 	    insertRectItem = new MenuItem(insertMenu, SWT.PUSH);
 	    insertRectItem.setText("Rectangle");
 
@@ -183,6 +196,45 @@ public class LilLexiUI
 	    	}	    		
 	    });	
 	    
+	    duck.addSelectionListener(new SelectionListener(){
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						lexiControl.addImage(image[0]);
+						updateUI();
+					}
+
+					@Override
+					public void widgetDefaultSelected(SelectionEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+	    	
+	    		});
+	    apple.addSelectionListener(new SelectionListener(){
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				lexiControl.addImage(image[1]);
+				updateUI();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	
+		});
+	    question.addSelectionListener(new SelectionListener(){
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				lexiControl.addImage(image[2]);
+				updateUI();
+			}
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {}
+	
+		});
+
 //        Menu systemMenu = Display.getDefault().getSystemMenu();
 //        MenuItem[] mi = systemMenu.getItems();
 //        mi[0].addListener(SWT.Selection, new Listener() {

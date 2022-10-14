@@ -1,6 +1,7 @@
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -18,6 +19,11 @@ public class LilLexiControl
 	{
 		this.currentDoc = doc;
 		FontSize = 32;
+	}
+	
+	public void addImage(Image i)
+	{
+		currentDoc.addImage(i);
 	}
 	
 	/**

@@ -5,6 +5,7 @@
 import java.util.List;
 
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Image;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -85,6 +86,7 @@ public class LilLexiDoc
 	public List<Glyph> getGlyphs(){return glyphs;}
 
 	public int getFontSize() {
+		System.out.println(fontSize);
 		return fontSize;
 	}
 	
@@ -96,5 +98,10 @@ public class LilLexiDoc
 	}
 	public Font getFont() {
 		return font;
+	}
+
+	public void addImage(Image i) {
+		glyphs.add(cursor,new Picture(i));
+		cursor+=1;
 	}
 }
