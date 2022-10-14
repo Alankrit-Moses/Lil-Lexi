@@ -1,32 +1,37 @@
-import java.awt.Color;
+/*
+ * AUTHOR: Soumay Agarwal
+ * FILE: CharacterObject.java
+ * ASSIGNMENT: Programming Assignment 2
+ * PURPOSE: This class is known as the CharacterObject and it represents 
+ * 			and its purpose is to represent each character typed by the user.
+ */
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.events.PaintEvent;
 
-public class CharacterObject {
-	private char the_char;
-	private int size;
-	private String style;
-	private Color colour;
-	private boolean bold=false;
-	private boolean italic=false;
-	private boolean underline=false;			
+public class CharacterObject extends Glyph{
+	private char ch;
+	private String style, color;
+	private boolean bold;
+	private boolean italic;
+	private boolean underline;
 	
-	public CharacterObject(char Character, int size, String style, Color colour) {
-		the_char = Character;
-		this.size = size;
-		this.style = style;
-		this.colour = colour;
+	public CharacterObject(char charac, int size, int x, int y) {
+		super(size,"character", x, y);
+		this.ch = charac;
 	}
 	
-	public char getThe_char() {
-		return the_char;
+	public void setCoord(int x, int y) {
+		this.x = x;
+		this.y = y;
 	}
-	public void setThe_char(char the_char) {
-		this.the_char = the_char;
+	
+	public char getChar() {
+		return ch;
 	}
-	public int getSize() {
-		return size;
-	}
-	public void setSize(int size) {
-		this.size = size;
+	public void setChar(char ch) {
+		this.ch = ch;
 	}
 	public String getStyle() {
 		return style;
@@ -34,11 +39,11 @@ public class CharacterObject {
 	public void setStyle(String style) {
 		this.style = style;
 	}
-	public Color getColour() {
-		return colour;
+	public String getColor() {
+		return color;
 	}
-	public void setColour(Color colour) {
-		this.colour = colour;
+	public void setColor(String color) {
+		this.color = color;
 	}
 	public boolean isBold() {
 		return bold;
@@ -58,5 +63,9 @@ public class CharacterObject {
 	public void setUnderline(boolean underline) {
 		this.underline = underline;
 	}
-	
+
+	@Override
+	public void draw(Shell shell, PaintEvent e) {
+		e.gc.drawString(""+ch, x, y);
+	}
 }
