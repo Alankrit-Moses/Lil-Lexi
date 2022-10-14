@@ -54,6 +54,7 @@ class Draw
 					allowed = (int)(750/fontSize);
 					x=0;
 					y+=(int)(fontSize*1.6);
+					g.setCoord(x, y);
 				}
 				else
 				{
@@ -68,18 +69,26 @@ class Draw
 					}
 				}
 			}
-			else if(g.getType().equalsIgnoreCase("Image"))
+			else if(g.getType().equalsIgnoreCase("Image") || g.getType().equalsIgnoreCase("Shape"))
 			{
 				g.setCoord(200, y+50);
 				y+=200;
 				allowed = (int)(750/fontSize);
 				x=0;
 			}
-			else if(g.getType().equalsIgnoreCase("cursor") && lst.size()>1)
+			else if(g.getType().equalsIgnoreCase("cursor"))
 			{
 				System.out.println("Cursor present");
-				Glyph cursor = lst.get(currentDoc.getCursor()-1);
-				g.setCoord(cursor.getX(),cursor.getY());
+				if(currentDoc.getCursor()>0)
+				{
+					Glyph active= lst.get(currentDoc.getCursor()-1);
+					if(active.getType().equalsIgnoreCase("character"))
+						g.setCoord(active.getX()==0? active.getX():(active.getX()+20),active.getY());
+					else
+						g.setCoord(active.getX()+200,active.getY()+50);
+				}
+				else
+					g.setCoord(0, 0);
 			}
 		}
 	}

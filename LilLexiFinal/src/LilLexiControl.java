@@ -29,7 +29,7 @@ public class LilLexiControl
 	/**
 	 * selectCard  user selects a card
 	 */
-	void add( char c, int size) 
+	void add( char c) 
 	{	
 		currentDoc.add(c,FontSize);
 	}
@@ -48,5 +48,9 @@ public class LilLexiControl
 	
 	int length() {
 		return currentDoc.length();
+	}
+
+	public void drawShape(String string) {
+		currentDoc.drawShape(string);
 	}
 }

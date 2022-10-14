@@ -8,7 +8,7 @@ public class Cursor extends Glyph{
 	}
 	public void draw(Shell shell, PaintEvent e)
 	{
-		e.gc.drawLine(x+20, y, x+20, y+getSize());
+		e.gc.drawLine(x+5, y, x+5, y+getSize());
 	}
 
 }

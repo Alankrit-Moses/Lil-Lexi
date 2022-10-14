@@ -84,14 +84,14 @@ public class LilLexiUI
         		else if(e.keyCode == 16777218)
         			currentDoc.cursorUpdate("down");
         		if(e.keyCode==13)
-        			lexiControl.add('\n',0);
+        			lexiControl.add('\n');
         		else if(e.keyCode==9)
-        			lexiControl.add('\t',LilLexiUI.size);
+        			lexiControl.add('\t');
         		else if(e.keyCode == 8){
         			lexiControl.remove();
         		}
         		else if(e.keyCode>=0 && e.keyCode<=200) {
-	        		lexiControl.add(e.character,LilLexiUI.size);
+	        		lexiControl.add(e.character);
 	        	}
     			updateUI();
         	}
@@ -99,7 +99,7 @@ public class LilLexiUI
         });
 
 		Slider slider = new Slider (canvas, SWT.VERTICAL);
-		Rectangle clientArea = canvas.getClientArea ();
+		Rectangle clientArea = canvas.getClientArea();
 		slider.setBounds (clientArea.width - 40, clientArea.y + 10, 32, clientArea.height);
 		slider.addListener (SWT.Selection, event -> {
 			String string = "SWT.NONE";
@@ -264,7 +264,7 @@ public class LilLexiUI
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				lexiControl.drawShape("rectangle");
-			
+				updateUI();
 			}
 
 			@Override
@@ -279,7 +279,7 @@ public class LilLexiUI
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				lexiControl.drawShape("circle");
-				
+				updateUI();
 			}
 
 			@Override

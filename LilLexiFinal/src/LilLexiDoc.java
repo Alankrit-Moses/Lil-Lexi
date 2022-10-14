@@ -60,14 +60,12 @@ public class LilLexiDoc
 	
 	public void cursorUpdate(String string) {
 		if(string.equalsIgnoreCase("left") && cursor>0)
-		{
 			cursor-=1;
-		}
-		else if(string.equalsIgnoreCase("right") && cursor<glyphs.size())
+		else if(string.equalsIgnoreCase("right") && cursor<glyphs.size()-1)
 			cursor+=1;
 		else if(string.equalsIgnoreCase("up") && cursor>(750/fontSize))
 			cursor-=(750/fontSize);
-		else if(string.equalsIgnoreCase("down") && cursor<(glyphs.size()-(750/fontSize)-1))
+		else if(string.equalsIgnoreCase("down") && cursor<(glyphs.size()-(750/fontSize)))
 			cursor+=(750/fontSize);
 			
 	}
@@ -102,6 +100,19 @@ public class LilLexiDoc
 
 	public void addImage(Image i) {
 		glyphs.add(cursor,new Picture(i));
+		cursor+=1;
+	}
+	
+	public void addShape()
+	{
+		
+	}
+
+	public void drawShape(String string) {
+		if(string.equalsIgnoreCase("rectangle"))
+			glyphs.add(cursor,new Rect());
+		if(string.equalsIgnoreCase("circle"))
+			glyphs.add(cursor,new Circle());
 		cursor+=1;
 	}
 }
