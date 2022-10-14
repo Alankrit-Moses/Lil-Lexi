@@ -1,0 +1,84 @@
+import java.util.List;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+
+class Draw
+{
+	private Shell shell;
+	private PaintEvent e;
+	private LilLexiDoc currentDoc;
+	private Display display;
+	private int fontSize;
+	public Draw(Shell shell, PaintEvent e, LilLexiDoc currentDoc, Display display, int fontSize)
+	{
+		this.shell = shell;
+		this.e = e;
+		this.currentDoc = currentDoc;
+		this.display = display;
+		this.fontSize = fontSize;
+		this.setBreakPoints();
+		this.execute();
+	}
+	
+	public void execute()
+	{
+		//System.out.println("PaintListener");
+		Rectangle rect = shell.getClientArea();
+		e.gc.setBackground(display.getSystemColor(SWT.COLOR_WHITE)); 
+        e.gc.fillRectangle(rect.x, rect.y, rect.width, rect.height);
+        e.gc.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
+		List<Glyph> glyphs = currentDoc.getGlyphs();
+		for (Glyph g: glyphs)
+		{
+			g.draw(shell,e);
+		}
+		//e.gc.drawString("|", column+32, row+10);
+	}
+	public void setBreakPoints()
+	{
+		List<Glyph> lst = currentDoc.getGlyphs();
+		int allowed = (int)(750/fontSize);
+		int x=0,y=0;
+		for(Glyph g: lst)
+		{
+			if(g.getType().equalsIgnoreCase("character"))
+			{
+				if(((CharacterObject)(g)).getChar()=='\n')
+				{
+					allowed = (int)(750/fontSize);
+					x=0;
+					y+=(int)(fontSize*1.6);
+				}
+				else
+				{
+					g.setCoord(x, y);
+					x+=fontSize+5;
+					allowed-=1;
+					if(allowed<=0)
+					{
+						allowed = (int)(750/fontSize);
+						x=0;
+						y+=(int)(fontSize*1.6);
+					}
+				}
+			}
+			else if(g.getType().equalsIgnoreCase("image"))
+			{
+				g.setCoord(x+100, y+(fontSize+50));
+				allowed = (int)(750/fontSize);
+				x=0;
+				y+=(fontSize+100);
+			}
+			else if(g.getType().equalsIgnoreCase("cursor") && lst.size()>1)
+			{
+				System.out.println("Cursor present");
+				Glyph cursor = lst.get(currentDoc.getCursor()-1);
+				g.setCoord(cursor.getX(),cursor.getY());
+			}
+		}
+	}
+}
