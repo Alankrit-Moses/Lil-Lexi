@@ -1,5 +1,5 @@
 /*
- * AUTHOR: Soumay Agarwal
+ * AUTHOR: Alankrit Moses
  * FILE: Shape.java
  * ASSIGNMENT: Programming Assignment 2
  * PURPOSE: This class is responsible for inserting the shapes into our LilLexi editor.
@@ -15,6 +15,13 @@ public abstract class Shape extends Glyph{
 		super(size, type, x, y);
 	}
 	
+	/*
+	 * This method is the draw method of an abstract class
+	 * which is then implemented by the circle and rectangle.
+	 *
+	 * @param shell is the provided Shell object
+	 *		  e is the provided PaintEvent object
+	 */
 	public void draw(Shell shell, PaintEvent e){}
 
 }

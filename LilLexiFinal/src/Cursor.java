@@ -2,7 +2,7 @@
  * AUTHOR: Alankrit Moses
  * FILE: Cursor.java
  * ASSIGNMENT: Programming Assignment 2
- * PURPOSE: This class is represent the cursor which is employed in the doc.
+ * PURPOSE: This class  represents the cursor which is employed in the doc.
  */
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.widgets.Shell;

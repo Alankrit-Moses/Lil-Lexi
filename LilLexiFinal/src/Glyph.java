@@ -1,3 +1,10 @@
+/*
+ * AUTHOR: Alankrit Moses
+ * FILE: Glyph.java
+ * ASSIGNMENT: Programming Assignment 2
+ * PURPOSE: This class is the glyph class which represents the main component
+ *			of our LilLexi doc editor.
+ */
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.widgets.Shell;
 
@@ -30,12 +37,6 @@ public abstract class Glyph {
 	{
 		return scroll_offset;
 	}
-/*
- * AUTHOR: Alankrit Moses and Soumay Agarwal
- * FILE: LilLexiControl.java
- * ASSIGNMENT: Programming Assignment 2
- * PURPOSE: This class is Model class for LilLexi doc editor.
- */
 	public int getX() {return x;}
 	
 	public int getY() {return y;}

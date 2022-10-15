@@ -49,7 +49,9 @@ public class LilLexiUI
 	}
 		
 	/**
-	 * start the editor
+	 * This method is responsible for starting our Lexi UI. It also has various
+	 * listeners for different components which allows it to manage everything and
+	 * provide proper functionality.
 	 */
 	public void start()
 	{	
@@ -559,7 +561,8 @@ public class LilLexiUI
 	} 
 
 	/**
-	 * updateUI
+	 * This method is responsible for updating our UI by
+	 * calling redraw on canvas
 	 */
 	public void updateUI()
 	{
@@ -567,11 +570,13 @@ public class LilLexiUI
 	}
 	
 	/**
-	 * setCurrentDoc
+	 * This method is responsible for setting our current doc
+	 * with the provided LilLexiDoc object.
 	 */
 	public void setCurrentDoc(LilLexiDoc cd) { currentDoc = cd; }
 	/**
-	 * setController
+	 * This method is responsible for setting our current controler
+	 * with the provided LilLexiControl object.
 	 */
 	public void setController(LilLexiControl lc) { lexiControl = lc; }
 }

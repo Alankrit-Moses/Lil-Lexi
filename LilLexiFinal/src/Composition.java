@@ -2,7 +2,7 @@
  * AUTHOR: Alankrit Moses
  * FILE: Composition.java
  * ASSIGNMENT: Programming Assignment 2
- * PURPOSE: This class is composition class for LilLexi doc editor.
+ * PURPOSE: This class is the composition class for LilLexi doc editor.
  */
 import java.io.IOException;
 import java.util.*;
@@ -37,15 +37,32 @@ public class Composition {
 		}
 		cmh = new CommandHistory(this);
 	}
+	/*
+	 * This method is responsible for setting the scroll with the
+	 * provided offset.
+	 *
+	 * @param offset is the provided offset.
+	 */
 
 	public void setScroll(int offset)
 	{
 		scroll.setOffset(offset);
 	}
 
+	/*
+	 * This method is responsible for getting the size of the glyphs list.
+	 *
+	 * @return size of the glyph list.
+	 */
+
 	public int size() {
 		return glyphs.size();
 	}
+
+	/*
+	 * This method is responsible for removing a glyph object from 
+	 * our glyph list.
+	 */
 	
 	public void remove()
 	{
@@ -57,6 +74,13 @@ public class Composition {
 		}
 	}
 	
+	/*
+	 * This method is responsible for removing a glyph object from 
+	 * our glyph list.
+	 * @param undo is the provided string using whose position we remove a
+	 * 		  glpyh object.
+	 */
+
 	public void remove(String undo)
 	{
 		if(cursor.getPos()>0)
@@ -66,6 +90,11 @@ public class Composition {
 		}
 	}
 	
+	/*
+	 * This method is responsible for setting up the fontsize.
+	 * @param fontSize is the provided int font size.
+	 */
+
 	public void setFontSize(int fontSize)
 	{
 		this.fontSize = fontSize;
@@ -76,11 +105,21 @@ public class Composition {
 		}
 	}
 	
+	/*
+	 * This method is responsible for getting the command history.
+	 * @param cmh is the CommandHistory object.
+	 */
+
 	public CommandHistory getCMH()
 	{
 		return cmh;
 	}
 	
+	/*
+	 * This method is responsible for updating the cursor of our doc.
+	 * @param String tells whether the cursor moves left or right.
+	 */
+
 	public void cursorUpdate(String string) {
 		cmh.newCommand(string,null);
 		if(string.equalsIgnoreCase("left") && cursor.getPos()>0)
@@ -88,6 +127,13 @@ public class Composition {
 		else if(string.equalsIgnoreCase("right") && cursor.getPos()<glyphs.size()-1)
 			cursor.incrementPos();
 	}
+
+	/*
+	 * This method is responsible for updating the cursor of our doc.
+	 * @param String tells whether the cursor moves left or right.
+	 *        undo is the command for undo
+	 */
+
 	public void cursorUpdate(String string, String undo) {
 		if(string.equalsIgnoreCase("left") && cursor.getPos()>0)
 			cursor.decrementPos();
@@ -95,23 +141,51 @@ public class Composition {
 			cursor.incrementPos();
 	}
 
+	/*
+	 * This method is responsible for calling draw on glyphs.
+	 * @param shell is the Shell object
+	 *		  e is the provided PaintEvent
+	 */
+
 	public void draw(Shell shell, PaintEvent e) {
 		for(Glyph g: glyphs)
 			g.draw(shell, e);
 	}
 
+	/*
+	 * This method is responsible for adding the glyph object.
+	 * @param obj is the provided glyph object
+	 */
+
 	public void add(Glyph ob) {
 		cmh.newCommand("ADD", ob);
 		compositor.add(glyphs,ob,cursor);
 	}
+
+	/*
+	 * This method is responsible for adding the glyph object.
+	 * @param obj is the provided glyph object
+	 * 		  undo is the command for undo
+	 */
+
 	public void add(Glyph ob,String undo) {
 		compositor.add(glyphs,ob,cursor);
 	}
+
+	/*
+	 * This method is responsible for getting the font size.
+	 * @return fontSize is the provided font
+	 */
+
 	public int getFontSize()
 	{
 		return fontSize;
 	}
-	
+
+	/*
+	 * This method is responsible for getting the setting the break points.
+	 */
+
 	public void setBreakPoints()
 	{
 		double spacing = 1.5;

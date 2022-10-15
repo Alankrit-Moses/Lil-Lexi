@@ -1,3 +1,10 @@
+/**
+ * Author: Alankrit Moses
+ * File: Scroll.java
+ * Assigment: A2
+ * Description: This file is responsible for implementing the scroll functionality
+ *				for our LilLexi doc.
+ */
 import java.util.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
@@ -18,6 +25,12 @@ class Scroll
 		glyphs = g;
 		update();
 	}
+
+	/*
+	 * This method is the update method which is responsible for updating the
+	 * offset of various glyph objects.
+	 */
+
 	public void update()
 	{
 		for(Glyph g: glyphs)
@@ -28,6 +41,13 @@ class Scroll
 		}
 	}
 	
+	/*
+	 * This method is responsible for setting the offset and then calling the
+	 * update method.
+	 *
+	 * @param offset is the provided offset int
+	 */
+
 	public void setOffset(int offset)
 	{
 		this.offset = offset;
