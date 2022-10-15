@@ -1,4 +1,5 @@
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
@@ -45,12 +46,17 @@ public class LilLexiControl
 		currentDoc.remove();
 	}
 	
-	
-	int length() {
-		return currentDoc.length();
-	}
+//	int length() {
+//		return currentDoc.length();
+//	}
 
 	public void drawShape(String string) {
 		currentDoc.drawShape(string);
+	}
+
+	public void draw(Shell shell, PaintEvent e) {
+		
+		currentDoc.draw(shell,e);
+		
 	}
 }

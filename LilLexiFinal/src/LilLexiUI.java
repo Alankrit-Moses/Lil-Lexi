@@ -2,13 +2,14 @@
  * UI for Lil Lexi
  * 
  */
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.graphics.Font;
 
 
 /**
@@ -23,8 +24,8 @@ public class LilLexiUI
 	private Shell shell;
 	private Label statusLabel;
 	private Canvas canvas;
-	private int dragOffset;
-	static int size = 30;
+	private int size = 16;
+	private String style = "";
 	Image[] image;
 	
 	/**
@@ -43,7 +44,6 @@ public class LilLexiUI
 		image[0] = new Image(display,"images/duck.jpg");
 		image[1] = new Image(display,"images/apple.jpg");
 		image[2] = new Image(display,"images/blank.jpg");
-		dragOffset = 0;
 	}
 		
 	/**
@@ -51,6 +51,8 @@ public class LilLexiUI
 	 */
 	public void start()
 	{	
+		Font f = new Font(display,"Helvetica",16,SWT.NONE);
+		currentDoc.setFont(f);
 		//---- create widgets for the interface
 	    Composite upperComp = new Composite(shell, SWT.NO_FOCUS);
 	    Composite lowerComp = new Composite(shell, SWT.NO_FOCUS);
@@ -59,32 +61,35 @@ public class LilLexiUI
 		canvas = new Canvas(upperComp, SWT.NONE);
 		canvas.setSize(800,800);
 
-		canvas.addPaintListener(e -> new Draw(shell, e, currentDoc, display, currentDoc.getFontSize(), display, dragOffset));
+		canvas.addPaintListener(e -> {
+			Rectangle rect = shell.getClientArea();
+			e.gc.setBackground(display.getSystemColor(SWT.COLOR_WHITE)); 
+	        e.gc.fillRectangle(rect.x, rect.y, rect.width, rect.height);
+	        e.gc.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
+	        
+	        lexiControl.draw(shell, e);
+		});
 		
         canvas.addMouseListener(new MouseListener() {
             public void mouseDown(MouseEvent e) {
             } 
             public void mouseUp(MouseEvent e) {
             } 
-            public void mouseDoubleClick(MouseEvent e) {
-            	LilLexiUI.size-=20;            } 
+            public void mouseDoubleClick(MouseEvent e) {   } 
         });
         
         canvas.addKeyListener(new KeyListener() {
         	public void keyPressed(KeyEvent e) {
+        		Composition comp = currentDoc.getComposition();
         		System.out.println("KeyCode: "+e.keyCode);
-        		if(e.keyCode == 16777221)	//
-        			currentDoc.setFontSize(currentDoc.getFontSize()+10);
+        		if(e.keyCode == 16777221)
+        			currentDoc.setFontSize(comp.getFontSize()+10);
         		else if(e.keyCode == 16777222)	//16777219
-        			currentDoc.setFontSize(currentDoc.getFontSize()-10);
+        			currentDoc.setFontSize(comp.getFontSize()-10);
         		else if(e.keyCode == 16777219)
-        			currentDoc.cursorUpdate("left");
+        			comp.cursorUpdate("left");
         		else if(e.keyCode == 16777220)
-        			currentDoc.cursorUpdate("right");
-        		else if(e.keyCode == 16777217)
-        			currentDoc.cursorUpdate("up");
-        		else if(e.keyCode == 16777218)
-        			currentDoc.cursorUpdate("down");
+        			comp.cursorUpdate("right");
         		if(e.keyCode==13)
         			lexiControl.add('\n');
         		else if(e.keyCode==9)
@@ -104,6 +109,7 @@ public class LilLexiUI
 		Rectangle clientArea = canvas.getClientArea();
 		slider.setBounds (clientArea.width - 40, clientArea.y + 10, 32, clientArea.height);
 		slider.addListener (SWT.Selection, event -> {
+			Composition comp = currentDoc.getComposition();
 			String string = "SWT.NONE";
 			switch (event.detail) {
 				case SWT.DRAG: string = "SWT.DRAG"; break;
@@ -116,8 +122,7 @@ public class LilLexiUI
 			}
 			if(string.equals("SWT.DRAG"))
 			{
-				int offset = new Integer(slider.getSelection());
-				dragOffset = offset;
+				comp.setScroll(new Integer(slider.getSelection()));
 				updateUI();
 			}
 		});
@@ -140,7 +145,7 @@ public class LilLexiUI
 		MenuItem insertShapeItem;
 		MenuItem rectangle,circle;
 		MenuItem insertStyleItem;
-		MenuItem times, helvetic, calibri;
+		MenuItem times, helvetic, courier;
 		MenuItem insertSizeItem;
 		MenuItem size1, size2, size3, size4, size5, size6, size7;
 
@@ -161,14 +166,11 @@ public class LilLexiUI
 		insertMenuHeader.setText("Insert");
 		insertMenu = new Menu(shell, SWT.DROP_DOWN);
 		insertMenuHeader.setMenu(insertMenu);
-		//Adding font menu header
+		
 		insertMenuHeader2 = new MenuItem(menuBar, SWT.CASCADE);
-		insertMenuHeader2.setText("Font");
 		insertMenu2 = new Menu(shell, SWT.DROP_DOWN);
+		insertMenuHeader2.setText("Font");
 		insertMenuHeader2.setMenu(insertMenu2);
-//		insertMenuHeader2 = new MenuItem(menuBar, SWT.PUSH);
-//		insertMenu2 = new Menu(shell, SWT.DROP_DOWN);
-//		insertMenuHeader2.setMenu(insertMenu2);
 
 	    insertImageItem = new MenuItem(insertMenu, SWT.CASCADE);
 	    insertImageItem.setText("Image");
@@ -181,24 +183,8 @@ public class LilLexiUI
 	    question = new MenuItem(img, SWT.PUSH);
 	    question.setText("Question");
 //	    
-//	    insertShapeItem = new MenuItem(insertMenu, SWT.CASCADE);
-//	    insertImageItem.setText("Shapes");
-//	    Menu shape = new Menu(shell,SWT.DROP_DOWN);
-//	    insertShapeItem.setMenu(shape);
-//	    rectangle = new MenuItem(shape, SWT.NONE);
-//	    rectangle.setText("Rectangle");
-//	    circle = new MenuItem(shape, SWT.NONE);
-//	    circle.setText("Circle");
 	    
-	    insertRectItem = new MenuItem(insertMenu, SWT.CASCADE);
-	    insertRectItem.setText("Shapes");
-	    Menu shape = new Menu(shell,SWT.DROP_DOWN);
-	    insertRectItem.setMenu(shape);
-	    rectangle = new MenuItem(shape, SWT.NONE);
-	    rectangle.setText("Rectangle");
-	    circle = new MenuItem(shape, SWT.NONE);
-	    circle.setText("Circle");
-	    
+	    //Creating menu for Font
 	    //Adding for font
 	    insertStyleItem = new MenuItem(insertMenu2, SWT.CASCADE);
 	    insertStyleItem.setText("Style");
@@ -208,8 +194,8 @@ public class LilLexiUI
 	    times.setText("Times New Roman");
 	    helvetic = new MenuItem(style, SWT.NONE);
 	    helvetic.setText("Helvetica");
-	    calibri = new MenuItem(style, SWT.NONE);
-	    calibri.setText("Calibri");
+	    courier = new MenuItem(style, SWT.NONE);
+	    courier.setText("Courier");
 	    
 	    insertSizeItem = new MenuItem(insertMenu2, SWT.CASCADE);
 	    insertSizeItem.setText("Size");
@@ -230,6 +216,24 @@ public class LilLexiUI
 	    size7 = new MenuItem(size, SWT.NONE);
 	    size7.setText("40");
 	    
+//	    insertShapeItem = new MenuItem(insertMenu, SWT.CASCADE);
+//	    insertImageItem.setText("Shapes");
+//	    Menu shape = new Menu(shell,SWT.DROP_DOWN);
+//	    insertShapeItem.setMenu(shape);
+//	    rectangle = new MenuItem(shape, SWT.NONE);
+//	    rectangle.setText("Rectangle");
+//	    circle = new MenuItem(shape, SWT.NONE);
+//	    circle.setText("Circle");
+	    
+	    
+	    insertRectItem = new MenuItem(insertMenu, SWT.CASCADE);
+	    insertRectItem.setText("Shapes");
+	    Menu shape = new Menu(shell,SWT.DROP_DOWN);
+	    insertRectItem.setMenu(shape);
+	    rectangle = new MenuItem(shape, SWT.NONE);
+	    rectangle.setText("Rectangle");
+	    circle = new MenuItem(shape, SWT.NONE);
+	    circle.setText("Circle");
 
 	    helpMenuHeader = new MenuItem(menuBar, SWT.CASCADE);
 	    helpMenuHeader.setText("Help");
@@ -272,11 +276,7 @@ public class LilLexiUI
 					}
 
 					@Override
-					public void widgetDefaultSelected(SelectionEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-	    	
+					public void widgetDefaultSelected(SelectionEvent e) {}
 	    		});
 	    apple.addSelectionListener(new SelectionListener(){
 			@Override
@@ -286,10 +286,7 @@ public class LilLexiUI
 			}
 
 			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void widgetDefaultSelected(SelectionEvent e) {}
 	
 		});
 	    question.addSelectionListener(new SelectionListener(){
@@ -308,7 +305,7 @@ public class LilLexiUI
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				lexiControl.drawShape("rectangle");
-			
+				updateUI();
 			}
 
 			@Override
@@ -323,7 +320,7 @@ public class LilLexiUI
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				lexiControl.drawShape("circle");
-				
+				updateUI();
 			}
 
 			@Override
@@ -334,12 +331,17 @@ public class LilLexiUI
 	    	
 	    });
 	    
+	    // FONT
+	    
 	    times.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
+				FontData fontDatas[] = currentDoc.getFont().getFontData();
+			    FontData data = fontDatas[0];
+			    Font f = new Font(display, "Times New Roman", data.getHeight(), SWT.NONE);
+			    currentDoc.setFont(f);
+			    updateUI();
 			}
 
 			@Override
@@ -354,7 +356,11 @@ public class LilLexiUI
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+				FontData fontDatas[] = currentDoc.getFont().getFontData();
+			    FontData data = fontDatas[0];
+			    Font f = new Font(display, "Helvetic", data.getHeight(), SWT.NONE);
+			    currentDoc.setFont(f);
+			    updateUI();
 				
 			}
 
@@ -366,11 +372,15 @@ public class LilLexiUI
 	    	
 	    });
 	    
-	    calibri.addSelectionListener(new SelectionListener() {
+	    courier.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+				FontData fontDatas[] = currentDoc.getFont().getFontData();
+			    FontData data = fontDatas[0];
+			    Font f = new Font(display, "Courier", data.getHeight(), SWT.NONE);
+			    currentDoc.setFont(f);
+			    updateUI();
 				
 			}
 
@@ -386,8 +396,11 @@ public class LilLexiUI
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
+				FontData fontDatas[] = currentDoc.getFont().getFontData();
+			    FontData data = fontDatas[0];
+			    Font f = new Font(display, data.getName(), 16, SWT.NONE);
+			    currentDoc.setFont(f);
+			    updateUI();
 			}
 
 			@Override
@@ -402,8 +415,11 @@ public class LilLexiUI
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
+				FontData fontDatas[] = currentDoc.getFont().getFontData();
+			    FontData data = fontDatas[0];
+			    Font f = new Font(display, data.getName(), 20, SWT.NONE);
+			    currentDoc.setFont(f);
+			    updateUI();
 			}
 
 			@Override
@@ -418,8 +434,11 @@ public class LilLexiUI
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
+				FontData fontDatas[] = currentDoc.getFont().getFontData();
+			    FontData data = fontDatas[0];
+			    Font f = new Font(display, data.getName(), 24, SWT.NONE);
+			    currentDoc.setFont(f);
+			    updateUI();
 			}
 
 			@Override
@@ -434,8 +453,11 @@ public class LilLexiUI
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
+				FontData fontDatas[] = currentDoc.getFont().getFontData();
+			    FontData data = fontDatas[0];
+			    Font f = new Font(display, data.getName(), 28, SWT.NONE);
+			    currentDoc.setFont(f);
+			    updateUI();
 			}
 
 			@Override
@@ -450,8 +472,11 @@ public class LilLexiUI
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
+				FontData fontDatas[] = currentDoc.getFont().getFontData();
+			    FontData data = fontDatas[0];
+			    Font f = new Font(display, data.getName(), 32, SWT.NONE);
+			    currentDoc.setFont(f);
+			    updateUI();
 			}
 
 			@Override
@@ -466,8 +491,11 @@ public class LilLexiUI
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
+				FontData fontDatas[] = currentDoc.getFont().getFontData();
+			    FontData data = fontDatas[0];
+			    Font f = new Font(display, data.getName(), 36, SWT.NONE);
+			    currentDoc.setFont(f);
+			    updateUI();
 			}
 
 			@Override
@@ -482,8 +510,11 @@ public class LilLexiUI
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
+				FontData fontDatas[] = currentDoc.getFont().getFontData();
+			    FontData data = fontDatas[0];
+			    Font f = new Font(display, data.getName(), 40, SWT.NONE);
+			    currentDoc.setFont(f);
+			    updateUI();
 			}
 
 			@Override
@@ -493,7 +524,6 @@ public class LilLexiUI
 			}
 	    	
 	    });
-	    
 
 //        Menu systemMenu = Display.getDefault().getSystemMenu();
 //        MenuItem[] mi = systemMenu.getItems();

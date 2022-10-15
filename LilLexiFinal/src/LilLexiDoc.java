@@ -2,13 +2,14 @@
  * Lil Lexi Document Model
  * 
  */
-import java.util.List;
+import java.util.*;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
-
-import java.util.ArrayList;
-import java.util.Collection;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * LilLexiDoc
@@ -16,20 +17,17 @@ import java.util.Collection;
 public class LilLexiDoc 
 {
 	private LilLexiUI ui;
-	private List<Glyph> glyphs;
+	
 	private int fontSize;
+	private Composition comp;
 	public Font font;
-	public int cursor;
 	
 	/**
 	 * Ctor
 	 */
 	public LilLexiDoc()
 	{
-		glyphs = new ArrayList<Glyph>();
-		fontSize = 32;
-		cursor = 0;
-		glyphs.add(new Cursor(fontSize,20,0));
+		comp = new Composition();
 	}
 	
 	/**
@@ -42,77 +40,55 @@ public class LilLexiDoc
 	public void add(char c,int size) 
 	{
 		CharacterObject ob = new CharacterObject(c, size);
-		glyphs.add(cursor, ob);
-		cursor+=1;
+		comp.add(ob);
+		comp.setBreakPoints();
 	}
-	public int length() {
-		return glyphs.size();
+	
+	public Composition getComposition()
+	{
+		return comp;
 	}
 	
 	public void remove()
 	{
-		if(cursor>0)
-		{
-			glyphs.remove(cursor-1);
-			cursor-=1;
-		}
+		comp.remove();
+		comp.setBreakPoints();
 	}
 	
-	public void cursorUpdate(String string) {
-		if(string.equalsIgnoreCase("left") && cursor>0)
-			cursor-=1;
-		else if(string.equalsIgnoreCase("right") && cursor<glyphs.size()-1)
-			cursor+=1;
-		else if(string.equalsIgnoreCase("up") && cursor>(750/fontSize))
-			cursor-=(750/fontSize);
-		else if(string.equalsIgnoreCase("down") && cursor<(glyphs.size()-(750/fontSize)))
-			cursor+=(750/fontSize);
-			
-	}
+	
 	public void setFontSize(int fontSize)
 	{
-		this.fontSize = fontSize;
-		for(Glyph g: glyphs)
-		{
-			if(g.getType().equalsIgnoreCase("character"))
-				g.setSize(fontSize);
-		}
+		comp.setFontSize(fontSize);
+		comp.setBreakPoints();
 	}
-	/**
-	 * gets
-	 */
-	public List<Glyph> getGlyphs(){return glyphs;}
 
-	public int getFontSize() {
-		System.out.println(fontSize);
-		return fontSize;
-	}
-	
-	public int getCursor() { return cursor; }
 	
 	public void setFont(Font font)
 	{
 		this.font = font;
+		FontData fontDatas[] = font.getFontData();
+		comp.setFontSize(fontDatas[0].getHeight());
+		comp.setBreakPoints();
 	}
 	public Font getFont() {
 		return font;
 	}
 
 	public void addImage(Image i) {
-		glyphs.add(cursor,new Picture(i));
-		cursor+=1;
-	}
-	
-	public void addShape()
-	{
-		
+		comp.add(new Picture(i));
+		comp.setBreakPoints();
 	}
 
 	public void drawShape(String string) {
 		if(string.equalsIgnoreCase("rectangle"))
-			glyphs.add(cursor,new Rect());
+			comp.add(new Rect());
 		if(string.equalsIgnoreCase("circle"))
-			glyphs.add(cursor,new Circle());
-		cursor+=1;
+			comp.add(new Circle());
+		comp.setBreakPoints();
+	}
+
+	public void draw(Shell shell, PaintEvent e) {
+		e.gc.setFont(font);
+		comp.draw(shell,e);
 	}
 }

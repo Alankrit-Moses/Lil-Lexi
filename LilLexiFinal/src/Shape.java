@@ -7,6 +7,6 @@ public abstract class Shape extends Glyph{
 		super(size, type, x, y);
 	}
 	
-	public void draw(Shell shell, PaintEvent e, int scrollPos){}
+	public void draw(Shell shell, PaintEvent e){}
 
 }

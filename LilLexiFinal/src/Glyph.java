@@ -3,7 +3,7 @@ import org.eclipse.swt.widgets.Shell;
 
 public abstract class Glyph {
 	
-	protected int x, y;
+	private int x, y, scroll_offset;
 	private int size;
 	private String type;
 	
@@ -12,6 +12,7 @@ public abstract class Glyph {
 		this.type = type;
 		this.x = x;
 		this.y = y;
+		scroll_offset = 0;
 	}
 	
 	public void setCoord(int x, int y)
@@ -20,6 +21,15 @@ public abstract class Glyph {
 		this.y = y;
 	}
 	
+	public void setOffset(int offset)
+	{
+		scroll_offset = offset;
+	}
+
+	public int getOffset()
+	{
+		return scroll_offset;
+	}
 	public int getX() {return x;}
 	
 	public int getY() {return y;}
@@ -41,7 +51,7 @@ public abstract class Glyph {
 		this.size = size;
 	}
 	
-	public void draw(Shell shell, PaintEvent e, int scrollPos) {
+	public void draw(Shell shell, PaintEvent e) {
 	}
 	public void remove() {}
 }
