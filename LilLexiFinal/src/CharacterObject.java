@@ -9,6 +9,7 @@
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.events.PaintEvent;
 
@@ -67,12 +68,11 @@ public class CharacterObject extends Glyph{
 	 *	      e is the PaintEvents
 	 */
 	@Override
-	public void draw(Shell shell, PaintEvent e) {
+	public void draw(Shell shell, PaintEvent e, Display display) {
 		System.out.println("Size: "+this.getSize());
-		e.gc.drawString(""+ch,this.getX(), this.getY()-this.getOffset()+5);
 		if(this.isUnderline())
-		{
-			e.gc.drawLine(this.getX(),this.getY()-this.getOffset()+this.getSize(),(int)(this.getX()+(this.getSize()*1.55)),this.getY()-this.getOffset()+this.getSize());
-		}
+			e.gc.setForeground(new Color(display, 255,0,0));
+		e.gc.drawString(""+ch,this.getX(), this.getY()-this.getOffset()+5);
+		e.gc.setForeground(new Color(display, 0,0,255));
 	}
 }

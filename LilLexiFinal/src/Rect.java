@@ -6,6 +6,7 @@
  *			doc editor.
  */
 import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class Rect extends Shape{
@@ -21,7 +22,7 @@ public class Rect extends Shape{
 	 * @param shell is the provided Shell object
 	 *		  e is the provided PaintEvent object
 	 */
-	public void draw(Shell shell, PaintEvent e){
+	public void draw(Shell shell, PaintEvent e, Display display){
 		e.gc.drawRectangle(this.getX(), this.getY()-this.getOffset(), 200, 100);
 	}
 

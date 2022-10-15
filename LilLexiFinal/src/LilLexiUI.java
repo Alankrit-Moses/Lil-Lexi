@@ -49,9 +49,7 @@ public class LilLexiUI
 	}
 		
 	/**
-	 * This method is responsible for starting our Lexi UI. It also has various
-	 * listeners for different components which allows it to manage everything and
-	 * provide proper functionality.
+	 * start the editor
 	 */
 	public void start()
 	{	
@@ -71,7 +69,7 @@ public class LilLexiUI
 	        e.gc.fillRectangle(rect.x, rect.y, rect.width, rect.height);
 	        e.gc.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
 	        
-	        lexiControl.draw(shell, e);
+	        lexiControl.draw(shell, e, display);
 		});
 		
         canvas.addMouseListener(new MouseListener() {
@@ -85,15 +83,16 @@ public class LilLexiUI
         canvas.addKeyListener(new KeyListener() {
         	public void keyPressed(KeyEvent e) {
         		Composition comp = currentDoc.getComposition();
-        		System.out.println("KeyCode: "+e.keyCode);
-        		if(e.keyCode == 16777221)
-        			currentDoc.getComposition().getCMH().undo();
-        		else if(e.keyCode == 16777222)
-        			currentDoc.getComposition().getCMH().redo();
-        		else if(e.keyCode == 16777219)
+        		if(e.keyCode == 16777219)
+        		{
         			comp.cursorUpdate("left");
+        			updateUI();
+        		}
         		else if(e.keyCode == 16777220)
+        		{
         			comp.cursorUpdate("right");
+        			updateUI();
+        		}
         		if(e.keyCode==13)
         			lexiControl.add('\n');
         		else if(e.keyCode==9)
@@ -561,8 +560,7 @@ public class LilLexiUI
 	} 
 
 	/**
-	 * This method is responsible for updating our UI by
-	 * calling redraw on canvas
+	 * updateUI
 	 */
 	public void updateUI()
 	{
@@ -570,13 +568,11 @@ public class LilLexiUI
 	}
 	
 	/**
-	 * This method is responsible for setting our current doc
-	 * with the provided LilLexiDoc object.
+	 * setCurrentDoc
 	 */
 	public void setCurrentDoc(LilLexiDoc cd) { currentDoc = cd; }
 	/**
-	 * This method is responsible for setting our current controler
-	 * with the provided LilLexiControl object.
+	 * setController
 	 */
 	public void setController(LilLexiControl lc) { lexiControl = lc; }
 }

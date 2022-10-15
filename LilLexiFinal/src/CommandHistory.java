@@ -5,6 +5,7 @@
  * Description: This is the file that is responsible for implementing the undo/redo
  *			    functionality in the LilLexi doc editor.
  */
+
 import java.util.Stack;
 public class CommandHistory {
 	
@@ -13,6 +14,7 @@ public class CommandHistory {
 	private Stack<String> redo;
 	private Stack<Glyph> undoGlyphs;
 	private Stack<Glyph> redoGlyphs;
+	
 	
 	public CommandHistory(Composition comp)
 	{

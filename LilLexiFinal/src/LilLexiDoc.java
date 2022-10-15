@@ -11,6 +11,7 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -91,8 +92,16 @@ public class LilLexiDoc
 		comp.setBreakPoints();
 	}
 
-	public void draw(Shell shell, PaintEvent e) {
+	public void draw(Shell shell, PaintEvent e, Display display) {
 		e.gc.setFont(this.font);
-		comp.draw(shell,e);
+		comp.draw(shell,e,display);
+	}
+
+	public void undo() {
+		comp.undo();
+	}
+	public void redo() {
+		comp.redo();
+		
 	}
 }

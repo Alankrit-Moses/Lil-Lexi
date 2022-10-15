@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.*;
 
 import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class Composition {
@@ -19,12 +20,18 @@ public class Composition {
 	private Scroll scroll;
 	private SpellCheck sc;
 	private CommandHistory cmh;
-	
+
+	/*
+	 * This method is responsible for setting the scroll with the
+	 * provided offset.
+	 *
+	 * @param offset is the provided offset.
+	 */
 	public Composition()
 	{
 		glyphs = new ArrayList<Glyph>();
 		fontSize  = 20;
-		cursor = new Cursor(fontSize,20,0);
+		cursor = new Cursor(fontSize,0,0);
 		glyphs.add(cursor);
 		compositor = new Compositor();
 		scroll = new Scroll(0,glyphs);
@@ -32,18 +39,17 @@ public class Composition {
 		try {
 			sc.SetDictionary();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		cmh = new CommandHistory(this);
 	}
+
 	/*
 	 * This method is responsible for setting the scroll with the
 	 * provided offset.
 	 *
 	 * @param offset is the provided offset.
 	 */
-
 	public void setScroll(int offset)
 	{
 		scroll.setOffset(offset);
@@ -54,16 +60,14 @@ public class Composition {
 	 *
 	 * @return size of the glyph list.
 	 */
-
 	public int size() {
 		return glyphs.size();
 	}
-
+	
 	/*
 	 * This method is responsible for removing a glyph object from 
 	 * our glyph list.
 	 */
-	
 	public void remove()
 	{
 		if(cursor.getPos()>0)
@@ -80,7 +84,6 @@ public class Composition {
 	 * @param undo is the provided string using whose position we remove a
 	 * 		  glpyh object.
 	 */
-
 	public void remove(String undo)
 	{
 		if(cursor.getPos()>0)
@@ -94,7 +97,6 @@ public class Composition {
 	 * This method is responsible for setting up the fontsize.
 	 * @param fontSize is the provided int font size.
 	 */
-
 	public void setFontSize(int fontSize)
 	{
 		this.fontSize = fontSize;
@@ -109,7 +111,6 @@ public class Composition {
 	 * This method is responsible for getting the command history.
 	 * @param cmh is the CommandHistory object.
 	 */
-
 	public CommandHistory getCMH()
 	{
 		return cmh;
@@ -119,7 +120,6 @@ public class Composition {
 	 * This method is responsible for updating the cursor of our doc.
 	 * @param String tells whether the cursor moves left or right.
 	 */
-
 	public void cursorUpdate(String string) {
 		cmh.newCommand(string,null);
 		if(string.equalsIgnoreCase("left") && cursor.getPos()>0)
@@ -127,13 +127,12 @@ public class Composition {
 		else if(string.equalsIgnoreCase("right") && cursor.getPos()<glyphs.size()-1)
 			cursor.incrementPos();
 	}
-
+	
 	/*
 	 * This method is responsible for updating the cursor of our doc.
 	 * @param String tells whether the cursor moves left or right.
 	 *        undo is the command for undo
 	 */
-
 	public void cursorUpdate(String string, String undo) {
 		if(string.equalsIgnoreCase("left") && cursor.getPos()>0)
 			cursor.decrementPos();
@@ -146,46 +145,41 @@ public class Composition {
 	 * @param shell is the Shell object
 	 *		  e is the provided PaintEvent
 	 */
-
-	public void draw(Shell shell, PaintEvent e) {
+	public void draw(Shell shell, PaintEvent e, Display display) {
 		for(Glyph g: glyphs)
-			g.draw(shell, e);
+			g.draw(shell, e, display);
 	}
 
 	/*
 	 * This method is responsible for adding the glyph object.
 	 * @param obj is the provided glyph object
 	 */
-
 	public void add(Glyph ob) {
 		cmh.newCommand("ADD", ob);
 		compositor.add(glyphs,ob,cursor);
 	}
-
+	
 	/*
 	 * This method is responsible for adding the glyph object.
 	 * @param obj is the provided glyph object
 	 * 		  undo is the command for undo
 	 */
-
 	public void add(Glyph ob,String undo) {
 		compositor.add(glyphs,ob,cursor);
 	}
-
+	
 	/*
 	 * This method is responsible for getting the font size.
 	 * @return fontSize is the provided font
 	 */
-
 	public int getFontSize()
 	{
 		return fontSize;
 	}
-
+	
 	/*
 	 * This method is responsible for getting the setting the break points.
 	 */
-
 	public void setBreakPoints()
 	{
 		double spacing = 1.5;
@@ -229,7 +223,7 @@ public class Composition {
 				{
 					Glyph active= glyphs.get(cursor.getPos()-1);
 					if(active.getType().equalsIgnoreCase("character"))
-						g.setCoord(active.getX()==0? active.getX():(active.getX()+20),active.getY());
+						g.setCoord(active.getX()+20,active.getY());
 					else
 						g.setCoord(active.getX()+200,active.getY()+50);
 				}
@@ -238,5 +232,12 @@ public class Composition {
 			}
 		}
 		sc.checker();
+	}
+
+	public void undo() {
+		cmh.undo();
+	}
+	public void redo() {
+		cmh.redo();
 	}
 }

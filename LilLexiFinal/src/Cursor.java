@@ -5,6 +5,7 @@
  * PURPOSE: This class  represents the cursor which is employed in the doc.
  */
 import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class Cursor extends Glyph{
@@ -14,9 +15,9 @@ public class Cursor extends Glyph{
 		super(size, "Cursor", x, y);
 		oneDimensionalPos = 0;
 	}
-	public void draw(Shell shell, PaintEvent e)
+	public void draw(Shell shell, PaintEvent e, Display display)
 	{
-		e.gc.drawLine(this.getX(), this.getY()-this.getOffset(), this.getX(), this.getY()+getSize()-this.getOffset());
+		e.gc.drawLine(this.getX(), this.getY()-this.getOffset(), this.getX(), (int)(this.getY()+(getSize()*2))-this.getOffset());
 	}
 	public void incrementPos() {
 		this.oneDimensionalPos+=1;

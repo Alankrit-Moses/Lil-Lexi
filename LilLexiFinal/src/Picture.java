@@ -7,11 +7,13 @@
  */
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class Picture extends Glyph{
 
 	private Image i;
+	
 	public Picture(Image i) {
 		super(0, "Image", 100, 100);
 		this.i = i;
@@ -24,8 +26,7 @@ public class Picture extends Glyph{
 	 * @param shell is the provided Shell object
 	 *		  e is the provided PaintEvent object
 	 */
-
-	public void draw(Shell shell, PaintEvent e)
+	public void draw(Shell shell, PaintEvent e, Display display)
 	{
 		e.gc.drawImage(i, this.getX(), this.getY()-this.getOffset());
 	}

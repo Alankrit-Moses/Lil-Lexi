@@ -7,6 +7,7 @@
  *			glyph class.
  */
 import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public abstract class Shape extends Glyph{
@@ -22,6 +23,6 @@ public abstract class Shape extends Glyph{
 	 * @param shell is the provided Shell object
 	 *		  e is the provided PaintEvent object
 	 */
-	public void draw(Shell shell, PaintEvent e){}
+	public void draw(Shell shell, PaintEvent e, Display display){}
 
 }

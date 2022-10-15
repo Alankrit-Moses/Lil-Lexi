@@ -9,6 +9,7 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -60,9 +61,18 @@ public class LilLexiControl
 		currentDoc.drawShape(string);
 	}
 
-	public void draw(Shell shell, PaintEvent e) {
+	public void draw(Shell shell, PaintEvent e, Display display) {
 		
-		currentDoc.draw(shell,e);
+		currentDoc.draw(shell,e, display);
 		
 	}
+
+	public void undo() {
+		currentDoc.undo();
+		
+	}
+	public void redo() {
+		currentDoc.redo();		
+	}
+	
 }

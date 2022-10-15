@@ -25,12 +25,11 @@ class Scroll
 		glyphs = g;
 		update();
 	}
-
+	
 	/*
 	 * This method is the update method which is responsible for updating the
 	 * offset of various glyph objects.
 	 */
-
 	public void update()
 	{
 		for(Glyph g: glyphs)
@@ -47,7 +46,6 @@ class Scroll
 	 *
 	 * @param offset is the provided offset int
 	 */
-
 	public void setOffset(int offset)
 	{
 		this.offset = offset;

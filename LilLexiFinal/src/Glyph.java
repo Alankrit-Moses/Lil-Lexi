@@ -6,6 +6,7 @@
  *			of our LilLexi doc editor.
  */
 import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public abstract class Glyph {
@@ -57,4 +58,8 @@ public abstract class Glyph {
 	public void draw(Shell shell, PaintEvent e) {
 	}
 	public void remove() {}
+
+	public void draw(Shell shell, PaintEvent e, Display display) {
+		// TODO Auto-generated method stub
+	}
 }
