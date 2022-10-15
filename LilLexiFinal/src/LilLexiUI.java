@@ -139,6 +139,10 @@ public class LilLexiUI
 		MenuItem duck,apple,question;
 		MenuItem insertShapeItem;
 		MenuItem rectangle,circle;
+		MenuItem insertStyleItem;
+		MenuItem times, helvetic, calibri;
+		MenuItem insertSizeItem;
+		MenuItem size1, size2, size3, size4, size5, size6, size7;
 
 		menuBar = new Menu(shell, SWT.BAR);
 		
@@ -157,6 +161,11 @@ public class LilLexiUI
 		insertMenuHeader.setText("Insert");
 		insertMenu = new Menu(shell, SWT.DROP_DOWN);
 		insertMenuHeader.setMenu(insertMenu);
+		//Adding font menu header
+		insertMenuHeader2 = new MenuItem(menuBar, SWT.CASCADE);
+		insertMenuHeader2.setText("Font");
+		insertMenu2 = new Menu(shell, SWT.DROP_DOWN);
+		insertMenuHeader2.setMenu(insertMenu2);
 //		insertMenuHeader2 = new MenuItem(menuBar, SWT.PUSH);
 //		insertMenu2 = new Menu(shell, SWT.DROP_DOWN);
 //		insertMenuHeader2.setMenu(insertMenu2);
@@ -181,7 +190,6 @@ public class LilLexiUI
 //	    circle = new MenuItem(shape, SWT.NONE);
 //	    circle.setText("Circle");
 	    
-	    
 	    insertRectItem = new MenuItem(insertMenu, SWT.CASCADE);
 	    insertRectItem.setText("Shapes");
 	    Menu shape = new Menu(shell,SWT.DROP_DOWN);
@@ -190,6 +198,38 @@ public class LilLexiUI
 	    rectangle.setText("Rectangle");
 	    circle = new MenuItem(shape, SWT.NONE);
 	    circle.setText("Circle");
+	    
+	    //Adding for font
+	    insertStyleItem = new MenuItem(insertMenu2, SWT.CASCADE);
+	    insertStyleItem.setText("Style");
+	    Menu style = new Menu(shell, SWT.DROP_DOWN);
+	    insertStyleItem.setMenu(style);
+	    times = new MenuItem(style,SWT.NONE);
+	    times.setText("Times New Roman");
+	    helvetic = new MenuItem(style, SWT.NONE);
+	    helvetic.setText("Helvetica");
+	    calibri = new MenuItem(style, SWT.NONE);
+	    calibri.setText("Calibri");
+	    
+	    insertSizeItem = new MenuItem(insertMenu2, SWT.CASCADE);
+	    insertSizeItem.setText("Size");
+	    Menu size = new Menu(shell, SWT.DROP_DOWN);
+	    insertSizeItem.setMenu(size);
+	    size1 = new MenuItem(size, SWT.NONE);
+	    size1.setText("16");
+	    size2 = new MenuItem(size, SWT.NONE);
+	    size2.setText("20");
+	    size3 = new MenuItem(size, SWT.NONE);
+	    size3.setText("24");
+	    size4 = new MenuItem(size, SWT.NONE);
+	    size4.setText("28");
+	    size5 = new MenuItem(size, SWT.NONE);
+	    size5.setText("32");
+	    size6 = new MenuItem(size, SWT.NONE);
+	    size6.setText("36");
+	    size7 = new MenuItem(size, SWT.NONE);
+	    size7.setText("40");
+	    
 
 	    helpMenuHeader = new MenuItem(menuBar, SWT.CASCADE);
 	    helpMenuHeader.setText("Help");
@@ -268,7 +308,7 @@ public class LilLexiUI
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				lexiControl.drawShape("rectangle");
-				updateUI();
+			
 			}
 
 			@Override
@@ -283,7 +323,167 @@ public class LilLexiUI
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				lexiControl.drawShape("circle");
-				updateUI();
+				
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
+	    
+	    times.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
+	    
+	    helvetic.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+				
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
+	    
+	    calibri.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+				
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
+	    
+	    size1.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
+	    
+	    size2.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
+	    
+	    size3.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
+	    
+	    size4.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
+	    
+	    size5.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
+	    
+	    size6.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
+	    
+	    size7.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 
 			@Override
