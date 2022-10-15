@@ -17,10 +17,9 @@ import org.eclipse.swt.widgets.Shell;
 public class LilLexiDoc 
 {
 	private LilLexiUI ui;
-	
-	private int fontSize;
 	private Composition comp;
 	public Font font;
+	private int fontSize;
 	
 	/**
 	 * Ctor
@@ -28,6 +27,7 @@ public class LilLexiDoc
 	public LilLexiDoc()
 	{
 		comp = new Composition();
+		fontSize = 32;
 	}
 	
 	/**
@@ -58,6 +58,7 @@ public class LilLexiDoc
 	
 	public void setFontSize(int fontSize)
 	{
+		this.fontSize = fontSize;
 		comp.setFontSize(fontSize);
 		comp.setBreakPoints();
 	}
@@ -67,6 +68,7 @@ public class LilLexiDoc
 	{
 		this.font = font;
 		FontData fontDatas[] = font.getFontData();
+		System.out.println("Size: "+fontDatas[0].getHeight());
 		comp.setFontSize(fontDatas[0].getHeight());
 		comp.setBreakPoints();
 	}
@@ -88,7 +90,7 @@ public class LilLexiDoc
 	}
 
 	public void draw(Shell shell, PaintEvent e) {
-		e.gc.setFont(font);
+		e.gc.setFont(this.font);
 		comp.draw(shell,e);
 	}
 }

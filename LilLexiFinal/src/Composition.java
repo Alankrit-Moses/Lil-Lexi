@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.*;
 
 import org.eclipse.swt.events.PaintEvent;
@@ -10,6 +11,8 @@ public class Composition {
 	private Cursor cursor;
 	private Compositor compositor;
 	private Scroll scroll;
+	private SpellCheck sc;
+	private CommandHistory cmh;
 	
 	public Composition()
 	{
@@ -19,6 +22,14 @@ public class Composition {
 		glyphs.add(cursor);
 		compositor = new Compositor();
 		scroll = new Scroll(0,glyphs);
+		sc = new SpellCheck(glyphs);
+		try {
+			sc.SetDictionary();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cmh = new CommandHistory(this);
 	}
 
 	public void setScroll(int offset)
@@ -31,6 +42,16 @@ public class Composition {
 	}
 	
 	public void remove()
+	{
+		if(cursor.getPos()>0)
+		{
+			cmh.newCommand("REMOVE", glyphs.get(cursor.getPos()-1));
+			glyphs.remove(cursor.getPos()-1);
+			cursor.decrementPos();
+		}
+	}
+	
+	public void remove(String undo)
 	{
 		if(cursor.getPos()>0)
 		{
@@ -49,7 +70,19 @@ public class Composition {
 		}
 	}
 	
+	public CommandHistory getCMH()
+	{
+		return cmh;
+	}
+	
 	public void cursorUpdate(String string) {
+		cmh.newCommand(string,null);
+		if(string.equalsIgnoreCase("left") && cursor.getPos()>0)
+			cursor.decrementPos();
+		else if(string.equalsIgnoreCase("right") && cursor.getPos()<glyphs.size()-1)
+			cursor.incrementPos();
+	}
+	public void cursorUpdate(String string, String undo) {
 		if(string.equalsIgnoreCase("left") && cursor.getPos()>0)
 			cursor.decrementPos();
 		else if(string.equalsIgnoreCase("right") && cursor.getPos()<glyphs.size()-1)
@@ -62,6 +95,10 @@ public class Composition {
 	}
 
 	public void add(Glyph ob) {
+		cmh.newCommand("ADD", ob);
+		compositor.add(glyphs,ob,cursor);
+	}
+	public void add(Glyph ob,String undo) {
 		compositor.add(glyphs,ob,cursor);
 	}
 	public int getFontSize()
@@ -82,7 +119,7 @@ public class Composition {
 				{
 					allowed = (int)(750/fontSize);
 					x=0;
-					y+=(int)(fontSize*1.6);
+					y+=(int)(fontSize*2.3);
 					g.setCoord(x, y);
 				}
 				else
@@ -94,7 +131,7 @@ public class Composition {
 					{
 						allowed = (int)(750/(fontSize*spacing));
 						x=0;
-						y+=(int)(fontSize*1.6);
+						y+=(int)(fontSize*2.3);
 					}
 				}
 			}
@@ -120,5 +157,6 @@ public class Composition {
 					g.setCoord(0, 0);
 			}
 		}
+		sc.checker();
 	}
 }

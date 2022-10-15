@@ -34,10 +34,6 @@ public abstract class Glyph {
 	
 	public int getY() {return y;}
 	
-	public int getFontSize() {
-		return size;
-	}
-	
 	public String getType(){
 		return type;
 	}

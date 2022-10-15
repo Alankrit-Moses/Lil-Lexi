@@ -83,9 +83,9 @@ public class LilLexiUI
         		Composition comp = currentDoc.getComposition();
         		System.out.println("KeyCode: "+e.keyCode);
         		if(e.keyCode == 16777221)
-        			currentDoc.setFontSize(comp.getFontSize()+10);
-        		else if(e.keyCode == 16777222)	//16777219
-        			currentDoc.setFontSize(comp.getFontSize()-10);
+        			currentDoc.getComposition().getCMH().undo();
+        		else if(e.keyCode == 16777222)
+        			currentDoc.getComposition().getCMH().redo();
         		else if(e.keyCode == 16777219)
         			comp.cursorUpdate("left");
         		else if(e.keyCode == 16777220)
@@ -383,14 +383,8 @@ public class LilLexiUI
 			    updateUI();
 				
 			}
-
 			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-	    	
-	    });
+			public void widgetDefaultSelected(SelectionEvent e) {}});
 	    
 	    size1.addSelectionListener(new SelectionListener() {
 
@@ -399,6 +393,7 @@ public class LilLexiUI
 				FontData fontDatas[] = currentDoc.getFont().getFontData();
 			    FontData data = fontDatas[0];
 			    Font f = new Font(display, data.getName(), 16, SWT.NONE);
+			    currentDoc.setFontSize(16);
 			    currentDoc.setFont(f);
 			    updateUI();
 			}
@@ -419,6 +414,7 @@ public class LilLexiUI
 			    FontData data = fontDatas[0];
 			    Font f = new Font(display, data.getName(), 20, SWT.NONE);
 			    currentDoc.setFont(f);
+			    currentDoc.setFontSize(20);
 			    updateUI();
 			}
 
@@ -438,6 +434,7 @@ public class LilLexiUI
 			    FontData data = fontDatas[0];
 			    Font f = new Font(display, data.getName(), 24, SWT.NONE);
 			    currentDoc.setFont(f);
+			    currentDoc.setFontSize(24);
 			    updateUI();
 			}
 
@@ -457,6 +454,7 @@ public class LilLexiUI
 			    FontData data = fontDatas[0];
 			    Font f = new Font(display, data.getName(), 28, SWT.NONE);
 			    currentDoc.setFont(f);
+			    currentDoc.setFontSize(28);
 			    updateUI();
 			}
 
@@ -476,6 +474,7 @@ public class LilLexiUI
 			    FontData data = fontDatas[0];
 			    Font f = new Font(display, data.getName(), 32, SWT.NONE);
 			    currentDoc.setFont(f);
+			    currentDoc.setFontSize(32);
 			    updateUI();
 			}
 
@@ -495,6 +494,7 @@ public class LilLexiUI
 			    FontData data = fontDatas[0];
 			    Font f = new Font(display, data.getName(), 36, SWT.NONE);
 			    currentDoc.setFont(f);
+			    currentDoc.setFontSize(36);
 			    updateUI();
 			}
 
@@ -514,6 +514,7 @@ public class LilLexiUI
 			    FontData data = fontDatas[0];
 			    Font f = new Font(display, data.getName(), 40, SWT.NONE);
 			    currentDoc.setFont(f);
+			    currentDoc.setFontSize(40);
 			    updateUI();
 			}
 

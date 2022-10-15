@@ -7,14 +7,12 @@
  */
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.events.PaintEvent;
 
 public class CharacterObject extends Glyph{
 	private char ch;
-	private String style, color;
-	private boolean bold;
-	private boolean italic;
 	private boolean underline;
 	private int size;
 	
@@ -23,40 +21,11 @@ public class CharacterObject extends Glyph{
 		this.ch = charac;
 	}
 	
-	public void setCoord(int x, int y) {
-		this.x = x;
-		this.y = y;
-	}
-	
 	public char getChar() {
 		return ch;
 	}
 	public void setChar(char ch) {
 		this.ch = ch;
-	}
-	public String getStyle() {
-		return style;
-	}
-	public void setStyle(String style) {
-		this.style = style;
-	}
-	public String getColor() {
-		return color;
-	}
-	public void setColor(String color) {
-		this.color = color;
-	}
-	public boolean isBold() {
-		return bold;
-	}
-	public void setBold(boolean bold) {
-		this.bold = bold;
-	}
-	public boolean isItalic() {
-		return italic;
-	}
-	public void setItalic(boolean italic) {
-		this.italic = italic;
 	}
 	public boolean isUnderline() {
 		return underline;
@@ -65,8 +34,12 @@ public class CharacterObject extends Glyph{
 		this.underline = underline;
 	}
 	@Override
-	public void draw(Shell shell, PaintEvent e, int scrollPos) {
-		System.out.println("");
-		e.gc.drawString(""+ch, x+10, y-scrollPos);
+	public void draw(Shell shell, PaintEvent e) {
+		System.out.println("Size: "+this.getSize());
+		e.gc.drawString(""+ch,this.getX(), this.getY()-this.getOffset()+5);
+		if(this.isUnderline())
+		{
+			e.gc.drawLine(this.getX(),this.getY()-this.getOffset()+this.getSize(),(int)(this.getX()+(this.getSize()*1.55)),this.getY()-this.getOffset()+this.getSize());
+		}
 	}
 }
