@@ -156,8 +156,11 @@ public class LilLexiUI
 		fileMenu = new Menu(shell, SWT.DROP_DOWN);
 		fileMenuHeader.setMenu(fileMenu);
 		
-		fileSaveItem = new MenuItem(fileMenu, SWT.PUSH);
-	    fileSaveItem.setText("Save");
+		MenuItem fileUndoItem = new MenuItem(fileMenu, SWT.PUSH);
+	    fileUndoItem.setText("Undo");
+	    
+	    MenuItem fileRedoItem = new MenuItem(fileMenu, SWT.PUSH);
+	    fileRedoItem.setText("Redo");
 
 	    fileExitItem = new MenuItem(fileMenu, SWT.PUSH);
 	    fileExitItem.setText("Exit");
@@ -253,8 +256,18 @@ public class LilLexiUI
 	    		display.dispose();
 	    	}
 	    });
-	    fileSaveItem.addSelectionListener(new SelectionListener() {
+	    fileUndoItem.addSelectionListener(new SelectionListener() {
 	    	public void widgetSelected(SelectionEvent event) {
+	    		lexiControl.undo();
+	    		updateUI();
+	    	}
+	    	public void widgetDefaultSelected(SelectionEvent event) {
+	    	}	    		
+	    });
+	    fileRedoItem.addSelectionListener(new SelectionListener() {
+	    	public void widgetSelected(SelectionEvent event) {
+	    		lexiControl.redo();
+	    		updateUI();
 	    	}
 	    	public void widgetDefaultSelected(SelectionEvent event) {
 	    	}	    		
