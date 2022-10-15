@@ -1,6 +1,8 @@
-/**
- * UI for Lil Lexi
- * 
+/*
+ * AUTHOR: Alankrit Moses and Soumay Agarwal
+ * FILE: LilLexiUI.java
+ * ASSIGNMENT: Programming Assignment 2
+ * PURPOSE: This class is the UI class for LilLexi doc editor.
  */
 import java.util.List;
 

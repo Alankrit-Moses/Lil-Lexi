@@ -1,3 +1,9 @@
+/*
+ * AUTHOR: Alankrit Moses and Soumay Agarwal
+ * FILE: LilLexiControl.java
+ * ASSIGNMENT: Programming Assignment 2
+ * PURPOSE: This class is composition class for LilLexi doc editor.
+ */
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Device;

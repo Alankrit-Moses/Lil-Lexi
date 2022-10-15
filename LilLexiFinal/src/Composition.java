@@ -1,3 +1,9 @@
+/*
+ * AUTHOR: Alankrit Moses
+ * FILE: Composition.java
+ * ASSIGNMENT: Programming Assignment 2
+ * PURPOSE: This class is composition class for LilLexi doc editor.
+ */
 import java.io.IOException;
 import java.util.*;
 

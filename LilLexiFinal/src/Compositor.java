@@ -1,3 +1,9 @@
+/*
+ * AUTHOR: Alankrit Moses
+ * FILE: Composition.java
+ * ASSIGNMENT: Programming Assignment 2
+ * PURPOSE: This class is the compositor class for LilLexi doc editor.
+ */
 import java.util.List;
 
 public class Compositor {

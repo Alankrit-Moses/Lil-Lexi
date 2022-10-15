@@ -1,3 +1,9 @@
+/*
+ * AUTHOR: Soumay Agarwal
+ * FILE: LilLexiControl.java
+ * ASSIGNMENT: Programming Assignment 2
+ * PURPOSE: This class is Picture glyph class for LilLexi doc editor.
+ */
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;

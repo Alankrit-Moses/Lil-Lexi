@@ -1,6 +1,8 @@
-/**
- * Lil Lexi Document Model
- * 
+/*
+ * AUTHOR: Alankrit Moses and Soumay Agarwal
+ * FILE: LilLexiControl.java
+ * ASSIGNMENT: Programming Assignment 2
+ * PURPOSE: This class is Model class for LilLexi doc editor.
  */
 import java.util.*;
 
