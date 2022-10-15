@@ -17,13 +17,17 @@ import java.util.Scanner;
 public class SpellCheck {
 	private List<Glyph> glyphs;
 	private List<String> words;
-	//private boolean underlined;
 	
 	public SpellCheck(List<Glyph> lst) {
 		glyphs = lst; 
 		words=new ArrayList<String>();
 		//underlined=false;
 	}
+
+	/*
+	 * This method is responsible for setting up the dictionary
+	 * from the text file into a list.
+	 */
 	
 	public void SetDictionary() throws IOException {
 		File file = new File("dictionary.txt");
@@ -36,10 +40,20 @@ public class SpellCheck {
 			words.add(str);
 		}
 	}
-	
+	/*
+	 * This method is a getter for the list of the words in the dictionary.
+	 * @return words is a list that contains all the dictionary words.
+	 */
 	public List<String> getDict(){
 		return words;
 	}
+
+	/*
+	 * This method is responsible for actually checking whether the words written on the 
+	 * doc are actually present in the dictionary or not. If they aren't present then
+	 * the words are underlined to display a spelling error.
+	 */
+
 	public void checker() {
 		List<CharacterObject> new_lst = new ArrayList<CharacterObject>();
 		String theWord = "";
