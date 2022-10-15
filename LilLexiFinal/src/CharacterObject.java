@@ -4,6 +4,7 @@
  * ASSIGNMENT: Programming Assignment 2
  * PURPOSE: This class is known as the CharacterObject and it represents 
  * 			and its purpose is to represent each character typed by the user.
+ *			This class inherits our Glyph class.
  */
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -21,18 +22,50 @@ public class CharacterObject extends Glyph{
 		this.ch = charac;
 	}
 	
+	/*
+	 * This method is a getter for the character.
+	 * 
+	 * @return ch is the character
+	 */
 	public char getChar() {
 		return ch;
 	}
+
+	/*
+	 * This method is the setter for the character.
+	 * 
+	 * @param ch is the character
+	 */
 	public void setChar(char ch) {
 		this.ch = ch;
 	}
+
+	/*
+	 * This method is a getter for the underline boolean.
+	 *
+	 * @return underline is a boolean
+	 */
 	public boolean isUnderline() {
 		return underline;
 	}
+
+	/*
+	 * This method is a setter for the underline boolean.
+	 * 
+	 * @param underline is a boolean
+	 */
+
 	public void setUnderline(boolean underline) {
 		this.underline = underline;
 	}
+
+	/*
+	 * This method is the draw function which overrides from the glyph and is
+	 * responsible for drawing the actual character on the screen.
+	 * 
+	 * @param shell is the provided Shell object
+	 *	      e is the PaintEvents
+	 */
 	@Override
 	public void draw(Shell shell, PaintEvent e) {
 		System.out.println("Size: "+this.getSize());

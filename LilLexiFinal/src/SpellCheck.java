@@ -1,3 +1,10 @@
+/*
+ * AUTHOR: Soumay Agarwal
+ * FILE: SpellCheck.java
+ * ASSIGNMENT: Programming Assignment 2
+ * PURPOSE: This class is the spell check class which is resonsible for recognising the faulty word
+ *			and underlining to show the user about a spelling mistake.
+ */
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
